@@ -12,4 +12,4 @@ client = boto3.client('firehose')
 response = requests.get(url)
 if response.status_code == 200:
     # loop over regions
-    response = client.put_record(StreamName='sdd-kinesis-airquality', Record={base64.encodebytes(response.content)}, PartitionKey='part_key_1')
+    response = client.put_record(DeliveryStreamName='sdd-kinesis-airquality', Record={'Data': base64.encodebytes(response.content)})
