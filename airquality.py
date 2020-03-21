@@ -2,12 +2,14 @@ import requests
 import boto3
 import os
 import json
+import base64
 
 airquality_token = os.environ['AIR_QUALITY_API_TOKEN']
 url = 'https://api.waqi.info/feed/berlin/?token=' + airquality_token
 
-client = boto3.client('kinesis')
+client = boto3.client('firehose')
 
 response = requests.get(url)
 if response.status_code == 200:
-    response = client.put_record(StreamName='sdd-kinesis-airquality', Data=json.dumps(response.json(), indent=2, sort_keys=True), PartitionKey='part_key_1')
+    # loop over regions
+    response = client.put_record(StreamName='sdd-kinesis-airquality', Record={base64.encodebytes(response.content)}, PartitionKey='part_key_1')
