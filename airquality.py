@@ -1,8 +1,8 @@
-import requests
-import boto3
-import os
-import json
 import base64
+import os
+
+import boto3
+import requests
 
 airquality_token = os.environ['AIR_QUALITY_API_TOKEN']
 url = 'https://api.waqi.info/feed/berlin/?token=' + airquality_token
