@@ -13,10 +13,8 @@ response_json=response.json()
 
 print(json.dumps(response_json, indent=2, sort_keys=True))
 
-
-client = boto3.client('kinesis')
-#Records = [{"Data" : json.dumps(response_json, indent=2, sort_keys=True)}
-
-response = client.put_record(StreamName='air_quality_test', Data=json.dumps(response_json, indent=2, sort_keys=True),PartitionKey='part_key_1')
-
-print (response)
+if response.status_code == 200:
+    client = boto3.client('kinesis')
+    #Records = [{"Data" : json.dumps(response_json, indent=2, sort_keys=True)}
+    response = client.put_record(StreamName='sdd-kinesis-airquality', Data=json.dumps(response_json, indent=2, sort_keys=True),PartitionKey='part_key_1')
+    print (response)
